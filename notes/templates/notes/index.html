@@ -1,21 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <head>
-    <title>Notes!</title>
+    <title>Edit Note!</title>
     <link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}" />
     <script src="{% static 'notes/filter.js' %}"></script>
 </head>
 <body>
-    <div>
-        <input type="text" id="searchField" class="search"/><button id="searchButton" class="search" type="submit" onclick="search()">Search</button>
+    <div id="title-area">
+        <h1>Pin it!</h1>
+        <div><input type="text" id="searchField" class="search"/><button id="searchButton" class="search" type="submit" onclick="search()">Search</button></div>
     </div>
     <div class="flexcenter">
         <div id="cork">
-            <form action="" method="post">
+            <form action="{% url 'notes:add' %}" method="post">
                 {% csrf_token %}
                 <div id="createNew" class="sticky">
-                    <input type="text" placeholder="New Note"/>
-                    <textarea placeholder="content goes here" rows="6"></textarea>
+                    <input type="text" placeholder="New Note" name="title"/>
+                    <textarea placeholder="content goes here" rows="6" name="content"></textarea>
                     <input id='submitNew' class="sticker" type="submit" />
                 </div>
             </form>
@@ -24,8 +25,12 @@
                 <div class="sticky note">
                     <h2>{{note.note_title}}</h2>
                     <p>{{note.note_content}}</p>
-                    <button class="sticker">edit</button>
-                    <button action="{% url 'notes:delete' note.id%}" class="sticker">delete</button>
+                    <form action="{% url 'notes:edit' note.id %}">
+                        <button class="sticker">edit</button>
+                    </form>
+                    <form action="{% url 'notes:delete' note.id %}" method="delete">
+                        <button class="sticker">delete</button>
+                    </form>
                 </div>
             {% endfor %}
             {% endif %}

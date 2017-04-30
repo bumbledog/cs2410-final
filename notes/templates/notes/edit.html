@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <title>Notes!</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}" />
+</head>
+<body>
+    <div class="sticky note">
+        <form action="{% url 'notes:change' note.id %}" method="post">
+            {% csrf_token %}
+            <input tpye="text" name="title" value="{{note.note_title}}"></input>
+            <textarea name="content">{{note.note_content}}</textarea>
+            <input type="submit" class="sticker">submit</button>
+        </form>
+    </div>
+</body>
