@@ -14,7 +14,7 @@
         <div id="cork">
             <form action="{% url 'notes:add' %}" method="post">
                 {% csrf_token %}
-                <div id="createNew" class="sticky">
+                <div class="sticky createNew">
                     <input type="text" placeholder="New Note" name="title"/>
                     <textarea placeholder="content goes here" rows="6" name="content"></textarea>
                     <input id='submitNew' class="sticker" type="submit" />
