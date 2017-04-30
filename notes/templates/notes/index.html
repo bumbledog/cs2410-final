@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <title>Notes!</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}" />
+    <script src="{% static 'notes/filter.js' %}"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id="searchField" class="search"/><button id="searchButton" class="search" type="submit" onclick="search()">Search</button>
+    </div>
+    <div class="flexcenter">
+        <div id="cork">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div id="createNew" class="sticky">
+                    <input type="text" placeholder="New Note"/>
+                    <textarea placeholder="content goes here" rows="6"></textarea>
+                    <input id='submitNew' class="sticker" type="submit" />
+                </div>
+            </form>
+            {% if note_list %}
+            {% for note in note_list %}
+                <div class="sticky note">
+                    <h2>{{note.note_title}}</h2>
+                    <p>{{note.note_content}}</p>
+                    <button class="sticker">edit</button>
+                    <button action="{% url 'notes:delete' note.id%}" class="sticker">delete</button>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
